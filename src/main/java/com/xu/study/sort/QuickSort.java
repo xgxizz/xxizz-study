@@ -1,7 +1,9 @@
 package com.xu.study.sort;
 
+import com.xu.study.sort.util.SortUtil;
+
 /**
- * @Description
+ * @Description  快速排序实现
  * @Author xgx
  * @Date 2019/11/27 10:47
  */
@@ -27,20 +29,13 @@ public class QuickSort {
             partition(arr, psition+1, right);
     }
 
-    public static void print(int []arr){
-        for (int a: arr) {
-            System.out.print(" " + a);
-        }
-        System.out.println();
-    }
-
     public static void main(String[] args) {
         int []arr = new int[]{5, 3, 7, 6, 4, 1, 0, 2, 9, 10, 8};
         System.out.print("原始数据：");
-        print(arr);
+        SortUtil.print(arr);
         partition(arr,0, arr.length-1);
         System.out.print("最终数据：");
-        print(arr);
+        SortUtil.print(arr);
     }
 }
 
