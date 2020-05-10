@@ -8,6 +8,7 @@
         <module>tree</module>
         <module>swagger</module>
         <module>rabbit</module>
+        <module>threadpool</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
