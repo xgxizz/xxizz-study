@@ -4,7 +4,7 @@ public class Matrix {
 
 
     public void findNumberIn2DArray(){
-        int num = 20;
+        int num = 23;
         int[][] matrix = {
                 {1,   4,  7, 11, 15},
                 {2,   5,  8, 12, 19},
@@ -12,25 +12,20 @@ public class Matrix {
                 {10, 13, 14, 17, 24},
                 {18, 21, 23, 26, 30}
         };
+        int count = 0;
         for (int i = 0; i < matrix.length ; i++) {
             int[] row = matrix[i];
-            //if ((row[0]<=num) && (row[row.length-1]>=num)){
-                for (int j = 0; j < row.length; j++) {
-                    boolean exist = divide(row, 1, row.length - 2, num);
-                    System.out.println(exist);
-                    int count = 0;
-                    if (exist == true)
-                        return ;
-                    else {
-                        count ++;
-                        if (count == matrix.length){
-                            System.out.println("no");
-                        }
-                    }
+            boolean exist = divide(row, 0, row.length - 1, num);
+
+            if (exist == true) {
+                System.out.println("找到了");
+                return;
+            }else {
+                count ++;
+                if (count == matrix.length){
+                    System.out.println("no");
                 }
-//            }else {
-//                return;
-//            }
+            }
         }
     }
 
@@ -38,31 +33,30 @@ public class Matrix {
         new Matrix().findNumberIn2DArray();
     }
     //二分查找
-    private boolean divide(int[] row, int start, int end, int num) {
-        if (row.length < 1) {
+    private boolean divide(int[] row, int start, int end, int target) {
+        if (row == null || row.length < 1)
+            return false;
+        if (start <= end) {
+            int mid = (start + end) / 2;
+            //System.out.println(mid);
+            if (row[mid] == target)
+                return true;
+            else if (row[mid] > target) {
+                return divide(row, start, mid - 1, target);
+            }
+            else{
+                return divide(row, mid + 1, end, target);
+            }
+        } else {
             return false;
         }
-            if (row[0] > num) {
-                return false;
-            }
-            if (row[row.length - 1] < num) {
-                return false;
-            }
-            if (start <= end) {
-                int mid = (start + end) / 2;
-                System.out.println(mid);
-                if (row[mid] == num)
-                    return true;
-                if (row[mid] > num) {
-                    return divide(row, start, mid, num);
-                }
-                if (row[mid] < num) {
-                    return divide(row, num + 1, end, num);
-                }
-                return false;
-            } else {
-                return false;
-            }
-        }
+    }
+
+    @Test
+    public void find(){
+        int[] row = {5,6};
+        boolean flag = divide(row, 0, row.length-1, 6);
+        System.out.println(flag);
+    }
 
 }
