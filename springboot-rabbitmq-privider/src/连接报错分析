@@ -1,0 +1,10 @@
+org.springframework.amqp.AmqpAuthenticationException: com.rabbitmq.client.AuthenticationFailureException: ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+
+原因：
+rabbitmq从3.3.0开始禁止使用guest/guest权限通过除localhost外的访问
+解决办法：
+1.修改配置文件
+    ①./usr/local/rabbitmq/rabbitmq_server-3.7.15/ebin/rabbit.app
+    ②将：{loopback_users, [<<”guest”>>]}，
+    改为：{loopback_users, []}，
+2.创建新的用户，并分配权限
