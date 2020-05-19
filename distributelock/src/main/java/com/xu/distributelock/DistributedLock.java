@@ -1,10 +1,10 @@
-package com.xu.distributelock.config;
+package com.xu.distributelock;
 
 public interface DistributedLock {
     long TIMEOUT_MILLIS = 30000;    
     int RETRY_TIMES = Integer.MAX_VALUE;    
     long SLEEP_MILLIS = 500;
-    long SUCCESS = 1L;
+    Long SUCCESS = 1L;
     boolean lock(String key);
     boolean lock(String key, int retryTimes);
     boolean lock(String key, int retryTimes, long sleepMillis);

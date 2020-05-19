@@ -1,4 +1,4 @@
-package com.xu.distributelock.config;
+package com.xu.distributelock;
 
 public abstract class AbstractDistributedLock implements DistributedLock {
     @Override

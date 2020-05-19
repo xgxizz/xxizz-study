@@ -1,13 +1,16 @@
-package com.xu.distributelock.config;
+package com.xu.distributelock.redis;
 
+import com.xu.distributelock.AbstractDistributedLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisCommands;
 
 import java.util.*;
 
@@ -47,26 +50,41 @@ public class RedisDistributedLock extends AbstractDistributedLock {
         return result;
     }    
     private boolean setRedis(String key, long expire) {
-        boolean ret = false;
-        try{
-            String script = "if redis.call('setNx',KEYS[1],ARGV[1]) == 1 then if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('expire',KEYS[1],ARGV[2]) else return 0 end end";
-            List<String> args = Arrays.asList(key,String.valueOf(expire));
-            Long result = (Long)redisTemplate.execute((RedisCallback<Long>) connection -> {
-                Object nativeConnection = connection.getNativeConnection();
-                if (nativeConnection instanceof JedisCluster) {
-                    return (Long) ((JedisCluster) nativeConnection).eval(script, Collections.singletonList(key), args);
-                } else if (nativeConnection instanceof Jedis) {
-                    return (Long) ((Jedis) nativeConnection).eval(script, Collections.singletonList(key), args);
+//        boolean ret = false;
+//        try{
+//            String script = "if redis.call('setNx',KEYS[1],ARGV[1]) == 1 then if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('expire',KEYS[1],ARGV[2]) else return 0 end end";
+//            List<String> args = Arrays.asList(key,String.valueOf(expire));
+//            Long result = (Long)redisTemplate.execute((RedisCallback<Long>) connection -> {
+//                Object nativeConnection = connection.getNativeConnection();
+//                if (nativeConnection instanceof JedisCluster) {
+//                    return (Long) ((JedisCluster) nativeConnection).eval(script, Collections.singletonList(key), args);
+//                } else if (nativeConnection instanceof Jedis) {
+//                    return (Long) ((Jedis) nativeConnection).eval(script, Collections.singletonList(key), args);
+//                }
+//                return null;
+//            });
+//            if(SUCCESS.equals(result)){
+//                return true;
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        return ret;
+        try {
+            String result = redisTemplate.execute(new RedisCallback<String>() {
+                @Override
+                public String doInRedis(RedisConnection connection) throws DataAccessException {
+                    JedisCommands commands = (JedisCommands) connection.getNativeConnection();
+                    String uuid = UUID.randomUUID().toString();
+                    lockFlag.set(uuid);
+                    return commands.set(key, uuid, "NX", "PX", expire);
                 }
-                return null;
             });
-            if(SUCCESS == result){
-                return true;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+            return !StringUtils.isEmpty(result);
+        } catch (Exception e) {
+            logger.error("set redis occured an exception", e);
         }
-        return ret;
+        return false;
     }
     
     @Override
