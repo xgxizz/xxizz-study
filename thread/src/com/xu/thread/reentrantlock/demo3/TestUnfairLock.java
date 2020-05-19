@@ -1,6 +1,7 @@
 package com.xu.thread.reentrantlock.demo3;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 /**
  * @Description
@@ -9,19 +10,16 @@ import org.junit.jupiter.api.Test;
  */
 public class TestUnfairLock {
     @Test
-    public void testFairLock(){
+    public void testUnFairLock() throws InterruptedException {
         final Service service = new Service(false);  //改为false就为非公平锁了
-        Runnable runnable = new Runnable() {
-            public void run() {
-                service.serviceMethod();
-            }
-        };
+        Runnable runnable = () -> service.serviceMethod();
         Thread []threads = new Thread[10];
         for (int i = 0; i < 10; i++) {
             threads[i] = new Thread(runnable , "Thread-"+i);
         }
         for (int i = 0; i < 10; i++) {
             threads[i].start();
+            //threads[i].join();
         }
     }
 }

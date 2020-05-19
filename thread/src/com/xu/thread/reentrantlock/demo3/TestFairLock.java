@@ -1,6 +1,7 @@
 package com.xu.thread.reentrantlock.demo3;
 
-import org.testng.annotations.Test;
+
+import org.junit.Test;
 
 /**
  * @Description
@@ -10,7 +11,7 @@ import org.testng.annotations.Test;
 public class TestFairLock {
 
     @Test
-    public void testFairLock(){
+    public void testFairLock() throws InterruptedException {
         final Service service = new Service(true);  //改为false就为非公平锁了
         Runnable runnable = new Runnable() {
             public void run() {
@@ -23,6 +24,7 @@ public class TestFairLock {
         }
         for (int i = 0; i < 10; i++) {
             threads[i].start();
+            //threads[i].join();
         }
     }
 }

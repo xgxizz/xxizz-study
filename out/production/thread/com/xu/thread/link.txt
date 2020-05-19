@@ -1,0 +1,2 @@
+synchronized 和 lock 的比较
+https://zhuanlan.zhihu.com/p/35016261

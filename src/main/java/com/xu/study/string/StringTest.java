@@ -1,6 +1,7 @@
 package com.xu.study.string;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 /**
  * @Description
@@ -14,5 +15,12 @@ public class StringTest {
         String str = "0123456789";
         System.out.println(str.substring(0,4));
         System.out.println(str.substring(4));
+    }
+
+    @Test
+    public void testEquel(){
+        String str = new String("hello");
+        String str1 = new String("hello");
+        System.out.println(str == str1);
     }
 }

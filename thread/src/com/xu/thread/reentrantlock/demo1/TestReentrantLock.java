@@ -1,7 +1,6 @@
 package com.xu.thread.reentrantlock.demo1;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.Calendar;
 import java.util.concurrent.locks.ReentrantLock;
@@ -13,9 +12,15 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class TestReentrantLock {
 
-    @Setter
-    @Getter
     private ReentrantLock lock;
+
+    public ReentrantLock getLock() {
+        return lock;
+    }
+
+    public void setLock(ReentrantLock lock) {
+        this.lock = lock;
+    }
 
     public void testReentrant(){
         lock.lock();
@@ -27,7 +32,7 @@ public class TestReentrantLock {
         lock = new ReentrantLock();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         TestReentrantLock testReentrantLock = new TestReentrantLock();
         try {
             // 测试可重入，方法testReentrant() 在同一线程中,可重复获取锁,执行获取锁后，显示信息的功能

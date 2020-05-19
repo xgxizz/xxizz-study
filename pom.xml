@@ -9,6 +9,7 @@
         <module>swagger</module>
         <module>rpc</module>
         <module>mybatis</module>
+        <module>string</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

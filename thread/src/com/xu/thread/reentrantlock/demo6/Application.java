@@ -1,6 +1,7 @@
 package com.xu.thread.reentrantlock.demo6;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 /**
  * @Description

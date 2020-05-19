@@ -1,7 +1,5 @@
 package com.xu.thread.reentrantlock.demo3;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -11,12 +9,11 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Date 2019/11/21 14:36
  */
 public class Service {
-    @Getter
-    @Setter
+
     private ReentrantLock lock;
 
     public Service(boolean isFair){
-        lock = new ReentrantLock();
+        lock = new ReentrantLock(isFair);
     }
     public void serviceMethod(){
         System.out.println(Thread.currentThread().getName() +  " 开始运行，马上获取锁...... " );

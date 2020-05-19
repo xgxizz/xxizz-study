@@ -1,6 +1,7 @@
 package com.xu.thread.reentrantlock.demo0;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 /**
  * @Description
@@ -10,13 +11,15 @@ import org.junit.jupiter.api.Test;
 public class TestLock {
 
     @Test
-    public void testLock(){
+    public void testLock() throws InterruptedException {
         //新建线程对象
         Runnable runnable = new ReentrantLockThread();
         Thread threadA = new Thread(runnable, "threadA");
         Thread threadB = new Thread(runnable, "threadB");
         threadA.start();
         threadB.start();
+        threadA.join();
+        threadB.join();
     }
 }
 /**
