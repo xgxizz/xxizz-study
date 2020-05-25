@@ -66,6 +66,7 @@ public class TestPropagation {
     @Test
     public void test_MANDATORY(){
         propagationService.test_MANDATORY();
+
     }
 
 
