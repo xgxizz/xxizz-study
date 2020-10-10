@@ -11,6 +11,9 @@
         <module>mybatis</module>
         <module>string</module>
         <module>spi</module>
+        <module>classloader</module>
+        <module>generic</module>
+        <module>threadlocal</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
